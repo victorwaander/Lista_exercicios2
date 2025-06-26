@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debounce</title>
+</head>
+
+<body>
+    <input type="text" id="input-matricula" placeholder="Digite sua matricula: ">
+
+
+    <script>
+        const inputForm = document.querySelector("#input-matricula");
+
+        // 1. Cria a função que você quer debounced
+        function buscarMatricula() {
+            const value = inputForm.value;
+            console.log("Buscando:", value);
+        }
+
+        // 2. Cria a versão debounced dela
+        const buscaDebounced = debounce(buscarMatricula, 1000);
+
+        // 3. Escuta evento de digitação (input)
+        inputForm.addEventListener("input", buscaDebounced);
+        // 4. debounce continua igual:
+        function debounce(fn, delay) {
+            let timeoutId;
+
+            return function(...args) {
+                clearTimeout(timeoutId);
+                timeoutId = setTimeout(() => {
+                    fn.apply(this, args);
+                }, delay);
+            };
+        }
+    </script>
+</body>
+
+</html>
